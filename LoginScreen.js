@@ -33,6 +33,8 @@ export default function LoginScreen() {
             if (data) {
                 console.log(JSON.parse(data));
                 global.username = username;
+                AsyncStorage.setItem("username", data)
+
 
             }
             else {
