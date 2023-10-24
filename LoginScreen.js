@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 // import  {useServerAuth}  from './APIHooks/useServerAuth';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Dashboard from './Dashboard';
 
 export default function LoginScreen() {
 
@@ -15,7 +16,7 @@ export default function LoginScreen() {
     const [passsword, onChangePassword] = useState('');
 
     const navigation = useNavigation();
-
+    const [login,setLogin] = useState(false);
 
     const loginBtnPressed = () => {
         // await signup(email, passsword, username);
@@ -33,7 +34,7 @@ export default function LoginScreen() {
             if (data) {
                 console.log(JSON.parse(data));
                 global.username = username;
-                AsyncStorage.setItem("username", data)
+                // AsyncStorage.setItem("username", data)
 
 
             }
@@ -44,7 +45,7 @@ export default function LoginScreen() {
                 // navigation.navigate('Home')
                 AsyncStorage.setItem("username", JSON.stringify(myArray))
                 AsyncStorage.setItem(username, JSON.stringify(myArray))
-                // console.log(JSON.parse(data))
+                console.log(JSON.parse(data))
 
             }
 
@@ -62,13 +63,18 @@ export default function LoginScreen() {
                 const userData = JSON.parse(data);
                 const username = userData[0].username;
                 global.username = username;
-                navigation.navigate('Dashboard')
+                // navigation.navigate('Dashboard')
+                setLogin(true)
 
+            }else{
+                setLogin(false)
             }
         })
-    })
+    }, [login])
 
     return (
+        <>
+        {login === false ?
         <View style={styles.container}>
             <Text> Login Screen! </Text>
 
@@ -99,7 +105,13 @@ export default function LoginScreen() {
             </TouchableOpacity>
 
             <StatusBar style="auto" />
+            
         </View>
+        :
+        <Dashboard />
+}
+
+        </>
     );
 
 }

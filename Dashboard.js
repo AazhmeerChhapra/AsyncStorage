@@ -15,8 +15,8 @@ export default function Dashboard() {
     const navigation = useNavigation();
 
     const logout = () => {
-        AsyncStorage.removeItem("username");
-        navigation.goBack()
+        // AsyncStorage.removeItem("username");
+        navigation.navigate('LoginScreen')
     }
 
     const changeColor = () => {
@@ -129,7 +129,7 @@ export default function Dashboard() {
             <TouchableOpacity style={styles.button} onPress={changeColor}>
                 <Text style={{ color: 'white' }}>Change Color</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={logout}>
+            <TouchableOpacity style={styles.button} onPress={() =>  { AsyncStorage.removeItem("username"); navigation.reset({ index: 0, routes: [{ name: 'LoginScreen' }] }) }}>
                 <Text style={{ color: 'white' }}>Logout</Text>
             </TouchableOpacity>
 
@@ -145,6 +145,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'green',
         padding: 10,
-        marginTop: 10,
+        marginTop: 40,
     },
 });
